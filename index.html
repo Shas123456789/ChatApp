@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat app</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .message-box {
+            display: flex;
+            align-items: center;
+        }
+        
+        #message {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        #btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        #btn:hover {
+            background-color: #0056b3;
+        }
+        
+        #messages {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        
+        #messages div {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 8px 12px;
+            margin-bottom: 5px;
+        }
+        
+        #messages div:nth-child(odd) {
+            background-color: #e6f2ff;
+        }
+        
+    </style> -->
+</head>
+<body>
+    <h1>Chat App</h1>
+
+    <input type="text" id="message" placeholder="Enter a message:">
+    <button id="btn">Send</button>
+
+    <div id="messages"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const SendButton = document.getElementById("btn");
+        const messageInput = document.getElementById("message");
+        const messagesDiv = document.getElementById("messages");
+
+        socket.on("recievemessage", message => {
+            console.log(message);
+            const messageElement = document.createElement("div");
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+        });
+
+        SendButton.addEventListener("click", (e) => {
+            const message = messageInput.value;
+            console.log(message);
+            socket.emit("usermessage", message);
+            messageInput.value = ""; // Clear the input field after sending
+        });
+    </script>
+</body>
+</html>
